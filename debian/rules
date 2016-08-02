@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/pkg-info.mk
+
+%:
+	dh $@ --with maven_repo_helper --buildsystem=gradle
+
+override_dh_auto_build:
+	dh_auto_build -- --settings-file debian/settings.gradle assemble
+
+get-orig-source: gradle_$(DEB_VERSION_UPSTREAM).tar.gz
+	mk-origtargz --rename $<
+
+gradle_$(DEB_VERSION_UPSTREAM).tar.gz:
+	wget https://android.googlesource.com/platform/tools/base/+archive/gradle_$(DEB_VERSION_UPSTREAM).tar.gz

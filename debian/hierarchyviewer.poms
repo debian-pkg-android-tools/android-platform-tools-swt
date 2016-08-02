@@ -1,0 +1,1 @@
+hierarchyviewer2/app/build/hierarchyviewer2.pom --java-lib --artifact=hierarchyviewer2/app/build/libs/*.jar

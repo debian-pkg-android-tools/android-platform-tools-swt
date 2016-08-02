@@ -1,0 +1,1 @@
+org.python s/jython-standalone/jython/ * s/.*/debian/ * * *

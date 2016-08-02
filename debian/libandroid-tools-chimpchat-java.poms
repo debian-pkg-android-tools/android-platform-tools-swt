@@ -1,0 +1,1 @@
+chimpchat/build/chimpchat.pom --java-lib --artifact=chimpchat/build/libs/*.jar --usj-name=com.android.tools.chimpchat

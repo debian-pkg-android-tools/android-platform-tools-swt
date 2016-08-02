@@ -1,0 +1,19 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Categories=Development;Debugger;Java;
+Exec=ddms
+Icon=ddms
+Keywords=android;debug;
+Name=Dalvik Debug Monitor Server
+Name[zh_CN]=Dalvik 除错监控服务器
+Name[zh_HK]=Dalvik 除錯監控服務器
+Name[zh_TW]=Dalvik 除錯監控伺服器
+Comment=Debugger for Android applications
+Comment[zh_CN]=Android 应用程序的除错工具
+Comment[zh_HK]=Adnroid 應用程序嘅除錯工具
+Comment[zh_TW]=Adnroid 應用程序的除錯工具
+GenericName=Debugger
+GenericName[zh_CN]=除错器
+GenericName[zh_HK]=除錯器
+GenericName[zh_TW]=除錯器

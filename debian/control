@@ -1,0 +1,202 @@
+Source: android-platform-tools-swt
+Section: debel
+Priority: optional
+Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
+Uploaders: Kai-Chung Yan <seamlikok@gmail.com>
+Build-Depends: debhelper (>= 9),
+               default-jdk (>= 1:1.6),
+               dh-exec,
+               eclipse-rcp,
+               gradle-debian-helper,
+               jython,
+               libandroid-tools-common-java,
+               libandroid-tools-sdklib-java,
+               libandroid-ddms-java,
+               libguava-java,
+               libjfreechart-swt-java,
+               libjsilver-aosp-java,
+               maven-repo-helper
+Standards-Version: 3.9.8
+Vcs-Browser: https://anonscm.debian.org/cgit/android-tools/android-platform-tools-swt.git
+Vcs-Git: https://anonscm.debian.org/git/android-tools/android-platform-tools-swt.git
+Homepage: https://android.googlesource.com/platform/tools/swt
+
+Package: libandroid-tools-swtmenubar-java
+Architecture: all
+Section: java
+Depends: libandroid-tools-sdklib-java,
+         ${misc:Depends}
+Breaks: libandroidsdk-swtmenubar-java
+Replaces: libandroidsdk-swtmenubar-java
+Description: Android SDK OS menubar hook library
+ This project provides a platform-specific way to hook into the default OS menu
+ bar.
+ .
+ Typically, an SWT Menu named "Tools" should be provided into which the library
+ will add "About" and "Options" menu items.
+ .
+ This package provides "swtmenubar.jar" in Android SDK.
+
+Package: libandroid-ddms-ui-java
+Architecture: all
+Section: java
+Depends: eclipse-rcp,
+         libandroid-ddms-java,
+         libjfreechart-swt-java,
+         ${misc:Depends}
+Breaks: libandroidsdk-ddmuilib-java
+Replaces: libandroidsdk-ddmuilib-java
+Description: Dalvik Debug Monitor Server - UI library for use with "ddmlib.jar"
+ Android Studio includes a debugging tool called the Dalvik Debug Monitor Server
+ (DDMS), which provides port-forwarding services, screen capture on the device,
+ thread and heap information on the device, logcat, process, and radio state
+ information, incoming call and SMS spoofing, location data spoofing, and more.
+ .
+ See also: <https://developer.android.com/studio/profile/ddms.html>
+ .
+ This package provides "ddmuilib.jar" in Android SDK.
+
+Package: libandroid-tools-sdkstats-java
+Architecture: all
+Section: java
+Depends: eclipse-rcp,
+         libandroid-tools-common-java,
+         libandroid-tools-swtmenubar-java (>= ${binary:Version}),
+         ${misc:Depends}
+Breaks: libandroidsdk-sdkstats-java
+Replaces: libandroidsdk-sdkstats-java
+Description: Sends Android SDK usage statistics to Google
+ This library sends reports about usage of the Android SDK to the Google
+ servers. Information can be used to help improving the software.
+ .
+ This package provides "sdkstats.jar" in Android SDK.
+
+Package: libandroid-tools-hierarchyviewer2lib-java
+Architecture: all
+Section: java
+Depends: eclipse-rcp,
+         libandroid-ddms-java,
+         libandroid-ddms-ui-java (>= ${binary:Version}),
+         ${misc:Depends}
+Breaks: libandroidsdk-hierarchyviewerlib-java
+Replaces: libandroidsdk-hierarchyviewerlib-java
+Description: View the UI hierarchy of an Android application - Core library
+ The Hierarchy Viewer allows you to debug and optimize your user interface.
+ It provides a visual representation of the layout's View hierarchy (the Layout
+ View) and a magnified inspector of the display (the Pixel Perfect View).
+ .
+ See also: <https://developer.android.com/studio/profile/hierarchy-viewer.html>
+ .
+ This package provides "hierarchyviewer2lib.jar", the core library of Hierarchy
+ Viewer.
+
+Package: ddms
+Architecture: all
+Depends: adb,
+         eclipse-rcp,
+         libandroid-ddms-java,
+         libandroid-ddms-ui-java (>= ${binary:Version}),
+         libandroid-tools-common-java,
+         libandroid-tools-sdkstats-java (>= ${binary:Version}),
+         libandroid-tools-swtmenubar-java (>= ${binary:Version}),
+         ${misc:Depends}
+Breaks: androidsdk-ddms
+Replaces: androidsdk-ddms
+Description: Dalvik Debug Monitor Server
+ Android Studio includes a debugging tool called the Dalvik Debug Monitor Server
+ (DDMS), which provides port-forwarding services, screen capture on the device,
+ thread and heap information on the device, logcat, process, and radio state
+ information, incoming call and SMS spoofing, location data spoofing, and more.
+ .
+ See also: <https://developer.android.com/studio/profile/ddms.html>
+ .
+ This package provides the standalone launcher of DDMS. However it is
+ deprecated, please use Android Device Monitor instead.
+
+Package: hierarchyviewer
+Architecture: all
+Depends: eclipse-rcp,
+         libandroid-ddms-java,
+         libandroid-ddms-ui-java,
+         libandroid-tools-common-java,
+         libandroid-tools-hierarchyviewer2lib-java (>= ${binary:Version}),
+         libandroid-tools-sdklib-java,
+         libandroid-tools-swtmenubar-java (>= ${binary:Version}),
+         ${misc:Depends}
+Breaks: androidsdk-hierarchyviewer
+Replaces: androidsdk-hierarchyviewer
+Description: View the UI hierarchy of an Android application
+ The Hierarchy Viewer allows you to debug and optimize your user interface.
+ It provides a visual representation of the layout's View hierarchy (the Layout
+ View) and a magnified inspector of the display (the Pixel Perfect View).
+ .
+ See also: <https://developer.android.com/studio/profile/hierarchy-viewer.html>
+ .
+ This package provides the standalone launcher of Hierarchy Viewer. However it
+ is deprecated, please use Android Device Monitor instead.
+
+Package: monkeyrunner
+Architecture: all
+Depends: default-jre (>= 1:1.6~) | java6-runtime,
+         eclipse-rcp,
+         jython,
+         libandroid-ddms-java,
+         libandroid-tools-chimpchat-java (>= ${binary:Version}),
+         libandroid-tools-common-java,
+         libandroid-tools-hierarchyviewer2lib-java (>= ${binary:Version}),
+         libandroid-tools-sdklib-java,
+         libjsilver-aosp-java,
+         ${misc:Depends}
+Description: Control an Android device using Python
+ The monkeyrunner tool provides an API for writing programs that control an
+ Android device or emulator from outside of Android code. With monkeyrunner,
+ you can write a Python program that installs an Android application or test
+ package, runs it, sends keystrokes to it, takes screenshots of its user
+ interface, and stores screenshots on the workstation. The monkeyrunner tool is
+ primarily designed to test applications and devices at the functional/framework
+ level and for running unit test suites, but you are free to use it for other
+ purposes.
+ .
+ See also: <https://developer.android.com/studio/test/monkeyrunner/index.html>
+
+Package: libandroid-tools-chimpchat-java
+Architecture: all
+Section: java
+Depends: eclipse-rcp,
+         libandroid-tools-sdklib-java,
+         libandroid-ddms-java,
+         libandroid-tools-hierarchyviewer2lib-java (>= ${binary:Version}),
+         ${misc:Depends}
+Description: Library communicating with a Android device
+ ChimpChat is a host-side library that provides an API for communication with an
+ instance of Monkey on a device.
+ .
+ This package provides "chimpchat.jar" in Android SDK.
+
+Package: traceview
+Architecture: all
+Depends: default-jre (>= 1:1.6~) | java6-runtime,
+         eclipse-rcp,
+         libandroid-tools-common-java,
+         libandroid-tools-sdkstats-java (>= ${binary:Version}),
+         ${misc:Depends}
+Breaks: androidsdk-traceview
+Replaces: androidsdk-traceview
+Description: Graphical profiler for Android application execution logs
+ Traceview is a graphical viewer for execution logs that you create by using the
+ Debug class to log tracing information in your code. Traceview can help you
+ debug your application and profile its performance.
+ .
+ This package provides the standalone launcher of Traceview. However it is
+ deprecated, please use Android Device Monitor instead.
+
+Package: uiautomatorviewer
+Architecture: all
+Depends: default-jre (>= 1:1.6~) | java6-runtime,
+         eclipse-rcp,
+         libandroid-ddms-java,
+         ${misc:Depends}
+Breaks: androidsdk-uiautomatorviewer
+Replaces: androidsdk-uiautomatorviewer
+Description: Android application UI inspector
+ This package provides the standalone launcher of uiautomatorviewer.

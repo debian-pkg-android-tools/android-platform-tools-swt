@@ -1,0 +1,1 @@
+swtmenubar/build/swtmenubar.pom --java-lib --artifact=swtmenubar/build/libs/*.jar --usj-name=com.android.tools.swtmenubar

@@ -1,0 +1,7 @@
+#!/usr/bin/dh-exec
+
+debian/hierarchyviewer.desktop                                                           usr/share/applications
+hierarchyviewer2/app/build/classpath                                                     usr/share/hierarchyviewer
+hierarchyviewer2/app/etc/hierarchyviewer                                                 usr/lib/android-sdk/tools
+hierarchyviewer2/hierarchyviewer2lib/src/main/java/images/sdk-hierarchyviewer-128.png => usr/share/icons/hicolor/128x128/apps/hierarchyviewer.png
+hierarchyviewer2/hierarchyviewer2lib/src/main/java/images/sdk-hierarchyviewer-16.png  => usr/share/icons/hicolor/16x16/apps/hierarchyviewer.png

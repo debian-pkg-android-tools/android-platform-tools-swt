@@ -1,0 +1,1 @@
+ddms/app/build/ddms.pom --java-lib --artifact=ddms/app/build/libs/*.jar

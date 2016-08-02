@@ -1,0 +1,6 @@
+#!/usr/bin/dh-exec
+
+ddms/app/build/classpath                           usr/share/ddms
+ddms/app/etc/ddms                                  usr/lib/android-sdk/tools
+ddms/app/src/main/resources/images/ddms-128.png => usr/share/icons/hicolor/128x128/apps/ddms.png
+debian/ddms.desktop                                usr/share/applications

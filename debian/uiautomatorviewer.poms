@@ -1,0 +1,1 @@
+uiautomatorviewer/build/uiautomatorviewer.pom --java-lib --artifact=uiautomatorviewer/build/libs/*.jar

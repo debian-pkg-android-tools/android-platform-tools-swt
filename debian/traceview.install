@@ -1,0 +1,6 @@
+#!/usr/bin/dh-exec
+
+#debian/traceview.desktop                               usr/share/applications
+traceview/build/classpath                               usr/share/traceview
+traceview/etc/traceview                                 usr/lib/android-sdk/tools
+traceview/src/main/resources/icons/traceview-128.png => usr/share/icons/hicolor/128x128/apps/traceview.png

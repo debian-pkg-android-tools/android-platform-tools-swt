@@ -1,0 +1,330 @@
+Author: Kai-Chung Yan
+Last-Update: 2016-08-02
+Description: Patch the build scripts to build using local artifacts
+--- a/build.gradle
++++ b/build.gradle
+@@ -1,61 +1,22 @@
+ // this applied only to swt/* projects
++apply from: 'debian/version.gradle'
++
+ subprojects { Project project ->
+     // only configure leaf projects.
+     if (!project.getSubprojects().isEmpty()) return
+ 
+-    apply from: "$rootDir/buildSrc/base/baseJava.gradle"
+-    apply plugin: 'sdk-java-lib'
++    apply plugin: 'java'
++    apply from: "${rootDir}/debian/generatePom.gradle"
++    apply from: "${rootDir}/debian/generateClasspath.gradle"
+ 
+     version = rootProject.ext.baseVersion
+-
+-    // configuration for swt dependency since the packaged jar is platform dependent
+-    // but at compile time we don't care. Also we don't want the artifact in the
+-    // main repo, so use the provided configuration
+-    configurations {
+-        swt
+-    }
++    sourceCompatibility = 1.6
++    targetCompatibility = 1.6
+ 
+     dependencies{
+-        swt "com.android.external.eclipse:swt:3.5.0"
+-        compile 'com.android.external.eclipse:org-eclipse-jface:3.6.2'
+-        testCompile "com.android.external.eclipse:swt:3.5.0"
+-    }
+-
+-    // include swt for compilation
+-    sourceSets.main.compileClasspath += configurations.swt
+-}
+-
+-apply plugin: 'sdk-files'
+-
+-sdk {
+-    linux {
+-        item("$rootProject.projectDir.parentFile/prebuilts/tools/linux-x86/swt/swt.jar") {
+-            into 'lib/x86'
+-            notice "$rootProject.projectDir.parentFile/prebuilts/tools/linux-x86/swt/NOTICE"
+-        }
+-        item("$rootProject.projectDir.parentFile/prebuilts/tools/linux-x86_64/swt/swt.jar") {
+-            into 'lib/x86_64'
+-            notice "$rootProject.projectDir.parentFile/prebuilts/tools/linux-x86_64/swt/NOTICE"
+-        }
+-    }
+-    mac {
+-        item("$rootProject.projectDir.parentFile/prebuilts/tools/darwin-x86/swt/swt.jar") {
+-            into 'lib/x86'
+-            notice "$rootProject.projectDir.parentFile/prebuilts/tools/darwin-x86/swt/NOTICE"
+-        }
+-        item("$rootProject.projectDir.parentFile/prebuilts/tools/darwin-x86_64/swt/swt.jar") {
+-            into 'lib/x86_64'
+-            notice "$rootProject.projectDir.parentFile/prebuilts/tools/darwin-x86_64/swt/NOTICE"
+-        }
+-    }
+-    windows {
+-        item("$rootProject.projectDir.parentFile/prebuilts/tools/windows/swt/swt.jar") {
+-            into 'lib/x86'
+-            notice "$rootProject.projectDir.parentFile/prebuilts/tools/windows/swt/NOTICE"
+-        }
+-        item("$rootProject.projectDir.parentFile/prebuilts/tools/windows-x86_64/swt/swt.jar") {
+-            into 'lib/x86_64'
+-            notice "$rootProject.projectDir.parentFile/prebuilts/tools/windows-x86_64/swt/NOTICE"
+-        }
++        compile files('/usr/share/java/swt.jar')
++        compile files('/usr/share/java/org.eclipse.jface.jar')
++        compile files('/usr/share/java/org.eclipse.equinox.common.jar')
++        compile files('/usr/share/java/org.eclipse.core.commands.jar')
+     }
+ }
+--- a/hierarchyviewer2/app/build.gradle
++++ b/hierarchyviewer2/app/build.gradle
+@@ -2,30 +2,14 @@
+ archivesBaseName = 'hierarchyviewer2'
+ 
+ dependencies {
+-    compile project(':base:common')
+-    compile project(':base:sdklib')
+-    compile project(':base:ddmlib')
++    compile 'com.android.tools:common:debian'
++    compile 'com.android.tools:sdklib:debian'
++    compile 'com.android.tools.ddms:ddmlib:debian'
+     compile project(':swt:ddmuilib')
+     compile project(':swt:hierarchyviewer2lib')
+     compile project(':swt:swtmenubar')
+ }
+ 
+-sdk {
+-    linux {
+-       item('etc/hierarchyviewer')  { executable true }
+-    }
+-    mac {
+-       item('etc/hierarchyviewer')  { executable true }
+-    }
+-    windows {
+-       item 'etc/hierarchyviewer.bat'
+-    }
+-}
+-
+-
+-// include swt for compilation
+-sourceSets.main.compileClasspath += configurations.swt
+-
+ // configure the manifest of the buildDistributionJar task.
+-sdkJar.manifest.attributes("Main-Class": "com.android.hierarchyviewer.HierarchyViewerApplication")
++jar.manifest.attributes("Main-Class": "com.android.hierarchyviewer.HierarchyViewerApplication")
+ 
+--- a/hierarchyviewer2/hierarchyviewer2lib/build.gradle
++++ b/hierarchyviewer2/hierarchyviewer2lib/build.gradle
+@@ -2,7 +2,7 @@
+ archivesBaseName = 'hierarchyviewer2lib'
+ 
+ dependencies {
+-    compile project(':base:ddmlib')
++    compile 'com.android.tools.ddms:ddmlib:debian'
+     compile project(':swt:ddmuilib')
+ 
+     compile 'com.google.guava:guava:15.0'
+@@ -14,3 +14,5 @@
+     main.resources.srcDir 'src/main/java'
+     test.resources.srcDir 'src/test/java'
+ }
++
++jar.baseName = "${group}.${archivesBaseName}"
+\ No newline at end of file
+--- a/monkeyrunner/build.gradle
++++ b/monkeyrunner/build.gradle
+@@ -2,9 +2,9 @@
+ archivesBaseName = 'monkeyrunner'
+ 
+ dependencies {
+-    compile project(':base:common')
+-    compile project(':base:sdklib')
+-    compile project(':base:ddmlib')
++    compile 'com.android.tools:common:debian'
++    compile 'com.android.tools:sdklib:debian'
++    compile 'com.android.tools.ddms:ddmlib:debian'
+     compile project(':swt:chimpchat')
+     compile project(':swt:hierarchyviewer2lib')
+ 
+@@ -20,18 +20,6 @@
+     test.resources.srcDir 'src/test/java'
+ }
+ 
+-sdk {
+-    linux {
+-       item('etc/monkeyrunner')  { executable true }
+-    }
+-    mac {
+-       item('etc/monkeyrunner')  { executable true }
+-    }
+-    windows {
+-       item 'etc/monkeyrunner.bat'
+-    }
+-}
+-
+ // configure the manifest of the buildDistributionJar task.
+-sdkJar.manifest.attributes("Main-Class": "com.android.monkeyrunner.MonkeyRunnerStarter")
++jar.manifest.attributes("Main-Class": "com.android.monkeyrunner.MonkeyRunnerStarter")
+ 
+--- a/sdkstats/build.gradle
++++ b/sdkstats/build.gradle
+@@ -2,7 +2,7 @@
+ archivesBaseName = 'sdkstats'
+ 
+ dependencies {
+-    compile project(':base:common')
++    compile 'com.android.tools:common:debian'
+     compile project(':swt:swtmenubar')
+ 
+     testCompile 'junit:junit:3.8.1'
+@@ -13,3 +13,4 @@
+     test.resources.srcDir 'src/test/java'
+ }
+ 
++jar.baseName = "${group}.${archivesBaseName}"
+\ No newline at end of file
+--- a/swtmenubar/build.gradle
++++ b/swtmenubar/build.gradle
+@@ -2,7 +2,7 @@
+ archivesBaseName = 'swtmenubar'
+ 
+ dependencies {
+-    compile project(':base:sdklib')
++    compile 'com.android.tools:sdklib:debian'
+ 
+     testCompile 'junit:junit:3.8.1'
+ }
+@@ -14,3 +14,5 @@
+     // Also add the MacOS specific sources for SWT Cocoa
+     main.java.srcDir 'src/main-darwin/java'
+ }
++
++jar.baseName = "${group}.${archivesBaseName}"
+\ No newline at end of file
+--- a/traceview/build.gradle
++++ b/traceview/build.gradle
+@@ -2,22 +2,10 @@
+ archivesBaseName = 'traceview'
+ 
+ dependencies {
+-    compile project(':base:common')
++    compile 'com.android.tools:common:debian'
+     compile project(':swt:sdkstats')
+ }
+ 
+-sdk {
+-    linux {
+-       item('etc/traceview')  { executable true }
+-    }
+-    mac {
+-       item('etc/traceview')  { executable true }
+-    }
+-    windows {
+-       item 'etc/traceview.bat'
+-    }
+-}
+-
+ // configure the manifest of the buildDistributionJar task.
+-sdkJar.manifest.attributes("Main-Class": "com.android.traceview.MainWindow")
++jar.manifest.attributes("Main-Class": "com.android.traceview.MainWindow")
+ 
+--- a/ddms/app/build.gradle
++++ b/ddms/app/build.gradle
+@@ -2,26 +2,14 @@
+ archivesBaseName = 'ddms'
+ 
+ dependencies {
+-    compile project(':base:common')
+-    compile project(':base:ddmlib')
++    compile 'com.android.tools:common:debian'
++    compile 'com.android.tools.ddms:ddmlib:debian'
+     compile project(':swt:ddmuilib')
+     compile project(':swt:sdkstats')
+     compile project(':swt:swtmenubar')
+ }
+ 
+-sdk {
+-    linux {
+-       item('etc/ddms') { executable true }
+-    }
+-    mac {
+-       item('etc/ddms') { executable true }
+-    }
+-    windows {
+-       item 'etc/ddms.bat'
+-    }
+-}
+-
+ 
+ // configure the manifest of the buildDistributionJar task.
+-sdkJar.manifest.attributes("Main-Class": "com.android.ddms.Main")
++jar.manifest.attributes("Main-Class": "com.android.ddms.Main")
+ 
+--- a/uiautomatorviewer/build.gradle
++++ b/uiautomatorviewer/build.gradle
+@@ -2,25 +2,13 @@
+ archivesBaseName = 'uiautomatorviewer'
+ 
+ dependencies {
+-    compile project(':base:ddmlib')
++    compile 'com.android.tools.ddms:ddmlib:debian'
+ }
+ 
+ sourceSets {
+     main.resources.srcDir 'src/main/java'
+ }
+ 
+-sdk {
+-    linux {
+-       item('etc/uiautomatorviewer')  { executable true }
+-    }
+-    mac {
+-       item('etc/uiautomatorviewer')  { executable true }
+-    }
+-    windows {
+-       item 'etc/uiautomatorviewer.bat'
+-    }
+-}
+-
+ // configure the manifest of the buildDistributionJar task.
+-sdkJar.manifest.attributes("Main-Class": "com.android.uiautomator.UiAutomatorViewer")
++jar.manifest.attributes("Main-Class": "com.android.uiautomator.UiAutomatorViewer")
+ 
+--- a/ddms/ddmuilib/build.gradle
++++ b/ddms/ddmuilib/build.gradle
+@@ -2,9 +2,9 @@
+ archivesBaseName = 'ddmuilib'
+ 
+ dependencies {
+-    compile project(':base:ddmlib')
++    compile 'com.android.tools.ddms:ddmlib:debian'
+     compile 'jfree:jfreechart:1.0.9'
+-    compile 'jfree:jfreechart-swt:1.0.9'
++    compile files('/usr/share/java/jfreechart-swt.jar')
+ 
+     testCompile 'junit:junit:3.8.1'
+ }
+@@ -13,3 +13,5 @@
+     main.resources.srcDir 'src/main/java'
+     test.resources.srcDir 'src/test/java'
+ }
++
++jar.baseName = "${group}.${archivesBaseName}"
+\ No newline at end of file
+--- a/chimpchat/build.gradle
++++ b/chimpchat/build.gradle
+@@ -3,9 +3,11 @@
+ version = rootProject.ext.baseVersion
+ 
+ dependencies {
+-    compile project(':base:sdklib')
+-    compile project(':base:ddmlib')
++    compile 'com.android.tools:sdklib:debian'
++    compile 'com.android.tools.ddms:ddmlib:debian'
+     compile project(':swt:hierarchyviewer2lib')
+ 
+     testCompile 'junit:junit:3.8.1'
+ }
++
++jar.baseName = "${group}.${archivesBaseName}"
+\ No newline at end of file

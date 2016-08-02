@@ -1,0 +1,12 @@
+.mh/
+*.log
+*.substvars
+ddms/
+debhelper-build-stamp
+files
+hierarchyviewer/
+libandroid-*-java/
+monkeyrunner/
+tmp/
+traceview/
+uiautomatorviewer/

@@ -1,0 +1,1 @@
+sdkstats/build/sdkstats.pom --java-lib --artifact=sdkstats/build/libs/*.jar --usj-name=com.android.tools.sdkstats

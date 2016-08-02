@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Categories=Development;Debugger;Java;
+Exec=traceview %f
+Icon=traceview
+Keywords=android;debug;sdk
+Name=Traceview
+Comment=Graphical profiler for Android application execution logs
+Comment[zh_CN]=Android 应用程序执行日志的图形分析工具
+Comment[zh_HK]=Adnroid 應用程序執行日誌嘅圖形分析工具
+Comment[zh_TW]=Adnroid 應用程序執行日誌的圖形分析工具
+GenericName=Profiler
+GenericName[zh]=分析工具

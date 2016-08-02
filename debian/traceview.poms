@@ -1,0 +1,1 @@
+traceview/build/traceview.pom --java-lib --artifact=traceview/build/libs/*.jar

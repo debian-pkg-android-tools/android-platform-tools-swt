@@ -1,0 +1,1 @@
+monkeyrunner/build/monkeyrunner.pom --java-lib --artifact=monkeyrunner/build/libs/*.jar

@@ -1,0 +1,1 @@
+hierarchyviewer2/hierarchyviewer2lib/build/hierarchyviewer2lib.pom --java-lib --artifact=hierarchyviewer2/hierarchyviewer2lib/build/libs/*.jar --usj-name=com.android.tools.hierarchyviewer2lib

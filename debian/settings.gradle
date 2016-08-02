@@ -1,0 +1,20 @@
+rootProject.projectDir = new File(rootDir, '..')
+
+include ':swt'
+project(':swt').projectDir = rootDir
+
+include ':swt:chimpchat'
+include ':swt:ddms'
+include ':swt:ddmuilib'
+include ':swt:hierarchyviewer2'
+include ':swt:hierarchyviewer2lib'
+include ':swt:monkeyrunner'
+include ':swt:sdkstats'
+include ':swt:swtmenubar'
+include ':swt:traceview'
+include ':swt:uiautomatorviewer'
+
+project(':swt:ddms'               ).projectDir = new File(rootDir, 'ddms/app')
+project(':swt:ddmuilib'           ).projectDir = new File(rootDir, 'ddms/ddmuilib')
+project(':swt:hierarchyviewer2'   ).projectDir = new File(rootDir, 'hierarchyviewer2/app')
+project(':swt:hierarchyviewer2lib').projectDir = new File(rootDir, 'hierarchyviewer2/hierarchyviewer2lib')

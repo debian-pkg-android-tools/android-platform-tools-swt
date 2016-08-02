@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Categories=Development;Profiling;Java;
+Exec=hierarchyviewer
+Icon=hierarchyviewer
+Keywords=android;ui;sdk;debug
+Name=Hierarchy Viewer
+Comment=View the UI hierarchy of an Android application
+Comment[zh_CN]=查看 Android 应用程序图形界面的结构
+Comment[zh_TW]=查看 Android 應用程式圖形界面的結構
+Comment[zh_HK]=查睇 Adnroid 應用程序圖形界面嘅結構
+GenericName=UI Profiler
+GenericName[zh_CN]=图形界面分析器
+GenericName[zh_TW]=圖形界面分析器
+GenericName[zh_HK]=圖形界面分析器
