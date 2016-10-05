@@ -1,5 +1,5 @@
 Source: android-platform-tools-swt
-Section: debel
+Section: devel
 Priority: optional
 Maintainer: Android Tools Maintainers <android-tools-devel@lists.alioth.debian.org>
 Uploaders: Kai-Chung Yan <seamlikok@gmail.com>
