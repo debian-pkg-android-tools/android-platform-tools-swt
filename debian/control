@@ -199,4 +199,7 @@ Depends: default-jre (>= 1:1.6) | java6-runtime,
 Breaks: androidsdk-uiautomatorviewer
 Replaces: androidsdk-uiautomatorviewer
 Description: Android application UI inspector
+ uiautomatorviewer is a graphical tool for inscpeting the UI of an Android
+ application.
+ .
  This package provides the standalone launcher of uiautomatorviewer.
